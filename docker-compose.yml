@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - traefik
+    networks:
+      - web
+
+  traefik:
+    image: traefik:v2.4
+    command:
+      - --api.insecure=true # Disable SSL for Traefik API dashboard (optional)
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.myresolver.acme.tlschallenge=true
+      - --certificatesresolvers.myresolver.acme.email=sajidk25@gmail.com
+      - --certificatesresolvers.myresolver.acme.storage=/acme.json
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./acme.json:/acme.json
+    networks:
+      - web
+
+networks:
+  web:
