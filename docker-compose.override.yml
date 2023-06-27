@@ -4,11 +4,11 @@ services:
   django:
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.websocket-insecure.rule=Host(`back.t99ltd.info`) && Path(`/ws/color/`)"
+      - "traefik.http.routers.websocket-insecure.rule=Host(`back.t99ltd.info`) && Path(`/wss/color/`)"
       - "traefik.http.routers.websocket-insecure.entrypoints=web"
       - "traefik.http.middlewares.websocket-redirect-web-secure.redirectscheme.scheme=https"
       - "traefik.http.routers.websocket-insecure.middlewares=websocket-redirect-web-secure"
-      - "traefik.http.routers.websocket.rule=Host(`back.t99ltd.info`) && Path(`/ws/color/`)"
+      - "traefik.http.routers.websocket.rule=Host(`back.t99ltd.info`) && Path(`/wss/color/`)"
       - "traefik.http.routers.websocket.entrypoints=websecure"
       - "traefik.http.routers.websocket.tls=true"
       - "traefik.http.routers.websocket.tls.certresolver=myresolver"
